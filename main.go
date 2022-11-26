@@ -7,16 +7,19 @@ import (
 
 func main() {
 
-	http.HandleFunc("/", handler)
-	http.HandleFunc("/count", counter)
-	http.ListenAndServe("localhost:8000", nil)
+	http.HandleFunc("/", indexhandler)
+	http.HandleFunc("/hello", helloHandler)
+	http.ListenAndServe(":9999", nil)
 
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func indexhandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "URL.Path=%s", r.URL.Path)
 }
 
-func counter(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "URL.Path=%s", r.URL.Path)
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+
+	for k, v := range r.Header {
+		fmt.Fprintf(w, "Header[%q]=%q\n", k, v)
+	}
 }
