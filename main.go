@@ -7,23 +7,25 @@ import (
 )
 
 func main() {
-
-	http.HandleFunc("/", indexhandler)
-	http.HandleFunc("/hello", helloHandler)
+	engine := Engine{}
 	//Function http.ListenAndServe Param
 	//Param1:listen address,9999 is address port
 	//Param2:Implementation of Web Framework Entry Based on Net/http Standard Library
-	log.Fatal(http.ListenAndServe(":9999", nil))
+	log.Fatal(http.ListenAndServe(":9999", &engine))
 
 }
 
-func indexhandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "URL.Path=%s", r.URL.Path)
-}
+type Engine struct{}
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-
-	for k, v := range r.Header {
-		fmt.Fprintf(w, "Header[%q]=%q\n", k, v)
+func (*Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	switch req.URL.Path {
+	case "/":
+		fmt.Fprintf(w, "URL.Path=%s", req.URL.Path)
+	case "/hello":
+		for k, v := range req.Header {
+			fmt.Fprintf(w, "Header[%q]=%q\n", k, v)
+		}
+	default:
+		fmt.Fprintf(w, "404 NOT FOUND: %s\n", req.URL)
 	}
 }
