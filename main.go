@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -9,7 +10,10 @@ func main() {
 
 	http.HandleFunc("/", indexhandler)
 	http.HandleFunc("/hello", helloHandler)
-	http.ListenAndServe(":9999", nil)
+	//Function http.ListenAndServe Param
+	//Param1:listen address,9999 is address port
+	//Param2:Implementation of Web Framework Entry Based on Net/http Standard Library
+	log.Fatal(http.ListenAndServe(":9999", nil))
 
 }
 
