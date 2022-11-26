@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/BigSuperBenny/ShirleyWebCore"
+	"github.com/bigsuperbenny/shirleywebcore"
 )
 
 func main() {
 
-	rCore := ShirleyWebCore.New()
+	rCore := shirleywebcore.New()
 
 	rCore.GET("/", func(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "URL.Path = %q\n", req.URL.Path)

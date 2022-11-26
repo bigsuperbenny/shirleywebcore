@@ -1,4 +1,4 @@
-package ShirleyWebCore
+package shirleywebcore
 
 import (
 	"fmt"
@@ -38,9 +38,8 @@ func (engine *Engine) POST(pattern string, handler HandlerFunc) {
 
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	key := req.Method + "-" + req.URL.Path
-
+	log.Printf("Request %4s - %s", req.Method, req.URL.Path)
 	if handler, ok := engine.router[key]; ok {
-		log.Printf("Request %4s - %s", req.Method, req.URL.Path)
 		handler(w, req)
 	} else {
 		fmt.Fprintf(w, "404 NOT FOUND:%s\n", req.URL.Path)
