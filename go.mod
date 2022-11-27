@@ -1,3 +1,3 @@
-module github.com/bigsuperbenny/shirleywebcore
+module github.com/bigsuperbenny/shirley
 
 go 1.19

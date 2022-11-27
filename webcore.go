@@ -1,4 +1,4 @@
-package shirleywebcore
+package shirley
 
 import (
 	"fmt"
