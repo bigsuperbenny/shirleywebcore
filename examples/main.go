@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/bigsuperbenny/shirley"
@@ -9,17 +8,22 @@ import (
 
 func main() {
 
-	rCore := shirley.New()
+	sh83 := shirley.New()
 
-	rCore.GET("/", func(w http.ResponseWriter, req *http.Request) {
-		fmt.Fprintf(w, "URL.Path = %q\n", req.URL.Path)
+	sh83.GET("/", func(c *shirley.Context) {
+		c.HTML(http.StatusOK, "<p>this is shirley core</p>")
 	})
 
-	rCore.POST("/hello", func(w http.ResponseWriter, req *http.Request) {
-		for k, v := range req.Header {
-			fmt.Fprintf(w, "Header[%q] = %q\n", k, v)
-		}
+	sh83.GET("/hello", func(c *shirley.Context) {
+		c.String(http.StatusOK, "hello %s, you're at %s\n", c.Query("name"), c.Path)
 	})
 
-	rCore.Run(":9999")
+	sh83.POST("/login", func(c *shirley.Context) {
+		c.JSON(http.StatusOK, shirley.H{
+			"username": c.PostForm("username"),
+			"password": c.PostForm("password"),
+		})
+	})
+
+	sh83.Run(":9999")
 }
